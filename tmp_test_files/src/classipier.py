@@ -36,24 +36,28 @@ def main():
 
     data_dir = pathlib.Path(args.dirname)
     filenames = glob.glob(str(data_dir) + '/*/*')
+    print(filenames)
     true_labels = []
     predicted_labels = []
 
     for filename in tqdm(filenames, desc="Predicting"):
+        print(filename)
         signal, label = get_sample(filename)
+        print(label)
+        print(signal.shape)
         interpreter.set_tensor(
             input_details[0]['index'], signal)
         interpreter.invoke()
         output_data = interpreter.get_tensor(output_details[0]['index'])
         label_id = np.argmax(output_data)
-
+        print(label_id)
         predicted_labels.append(label_id)
         true_labels.append(np.where(label == _LABELS)[0][0])
 
     predicted_labels = np.array(predicted_labels)
     true_labels = np.array(true_labels)
-    accuracy = (true_labels == predicted_labels).mean()
-    print("Accuracy on test set: {}".format(accuracy))
+    #accuracy = (true_labels == predicted_labels).mean()
+    #print("Accuracy on test set: {}".format(accuracy))
 
 
 def get_sample(filepath):
