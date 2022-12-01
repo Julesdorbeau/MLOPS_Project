@@ -33,7 +33,7 @@ def main():
     interpreter.allocate_tensors()
     input_details = interpreter.get_input_details()
     output_details = interpreter.get_output_details()
-
+    print(interpreter.get_input_details())
     data_dir = pathlib.Path(args.dirname)
     filenames = glob.glob(str(data_dir) + '/*/*')
     print(filenames)
@@ -62,8 +62,8 @@ def main():
 
 def get_sample(filepath):
     signal, _ = librosa.load(filepath, sr=params.SAMPLE_RATE)
-    signal = np.reshape(signal, (1, params.SAMPLE_RATE))
-
+    signal = np.reshape(signal, (1, 30, 20, 1))
+    
     label = filepath.split('/')[-2]
     return signal, label
 
