@@ -19,6 +19,7 @@
 }
 
 body {
+  background: var(--primary-color);
   font-family: var(--font);
   font-weight: normal;
   font-style: normal;
