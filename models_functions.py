@@ -31,9 +31,6 @@ def preprocess_audio(audio) :
     x = x[tf.newaxis,...]
     return x
 
-# ===== Prediction functions =====
-
-
 # ===== Flask call functions for prediction =====
 
 def run_tflite_prediction(model_path, audio) : 
@@ -177,3 +174,4 @@ def run_testsuite(model_path) :
     else : 
         print("Cannot use a model that is not a .h5 or .tflite model. Stopping program.")
 
+run_testsuite("models/normal_model.h5")
