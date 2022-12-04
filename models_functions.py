@@ -4,7 +4,7 @@ import numpy as np
 import tensorflow as tf
 from tensorflow import keras
 import matplotlib.pyplot as plt
-import tflite_runtime.interpreter as tflite
+import tflite_runtime.interpreter
 import time
 
 label_names = ['down' 'go' 'left' 'no' 'right' 'stop' 'up' 'yes']
@@ -35,7 +35,7 @@ def preprocess_audio(audio) :
 
 def run_tflite_prediction(model_path, audio) : 
     # Function to run the prediction with an tflite model
-    interpreter = tflite.Interpreter(model_path=model_path)
+    interpreter = tflite_runtime.interpreter.Interpreter(model_path=model_path)
     interpreter.allocate_tensors()
     input_details = interpreter.get_input_details()
     output_details = interpreter.get_output_details()
@@ -43,7 +43,7 @@ def run_tflite_prediction(model_path, audio) :
     interpreter.invoke()
     prediction = interpreter.get_tensor(output_details[0]['index'])
 
-    predicted_label = np.argmax(prediction()[0])
+    predicted_label = np.argmax(prediction[0])
     
     # Used to display the plot of the prediction
     # plt.bar(label_names, tf.nn.softmax(prediction[0]))
@@ -55,7 +55,7 @@ def run_tflite_prediction(model_path, audio) :
 def run_normal_prediction(model_path, audio) :
     model = keras.models.load_model(model_path)
     prediction = model(audio)
-    predicted_label = np.argmax(prediction()[0])
+    predicted_label = np.argmax(prediction[0])
     # Used to display the plot of the prediction
     # plt.bar(label_names, tf.nn.softmax(prediction[0]))
     # plt.title('Predictions')
@@ -80,7 +80,6 @@ def get_audio(filename) :
     # Getting the true label
     split_name = filename.split("-")
     label = int(split_name[0][-1])
-    print(label)
 
     x, sample_rate = tf.audio.decode_wav(x, desired_channels=1, desired_samples=16000,)
     x = tf.squeeze(x, axis=-1)
@@ -97,7 +96,6 @@ def run_normal_testsuite(model_path, filenames) :
     model = keras.models.load_model(model_path)
 
     for filename in filenames:
-        print(filename)
         audio_data, label = get_audio(filename)
 
         # Setting a time to get the time for the prediction and get a mean of the time on the rasp
@@ -112,7 +110,7 @@ def run_normal_testsuite(model_path, filenames) :
         time_count += (end_time - start_time)
 
         # Getting the prediction
-        predicted_label = np.argmax(prediction()[0])
+        predicted_label = np.argmax(prediction[0])
 
         # Appending the true label and prediction to determine the accuracy
         predicted_labels.append(predicted_label)
@@ -129,13 +127,12 @@ def run_tflite_testsuite(model_path, filenames) :
     predicted_labels = []
     time_count = 0
 
-    interpreter = tflite.Interpreter(model_path=model_path)
+    interpreter = tflite_runtime.interpreter.Interpreter(model_path=model_path)
     interpreter.allocate_tensors()
     input_details = interpreter.get_input_details()
     output_details = interpreter.get_output_details()
 
     for filename in filenames:
-        print(filename)
         audio_data, label = get_audio(filename)
 
         # Setting a time to get the time for the prediction and get a mean of the time on the rasp
@@ -152,7 +149,7 @@ def run_tflite_testsuite(model_path, filenames) :
         time_count += (end_time - start_time)
 
         # Getting the prediction
-        predicted_label = np.argmax(prediction()[0])
+        predicted_label = np.argmax(prediction[0])
 
         # Appending the true label and prediction to determine the accuracy
         predicted_labels.append(predicted_label)
@@ -166,7 +163,6 @@ def run_tflite_testsuite(model_path, filenames) :
 
 def run_testsuite(model_path) : 
     filenames = glob.glob('data/*/*')
-    print(filenames)
     if "h5" in model_path :
         run_normal_testsuite(model_path, filenames)
     elif "tflite" in model_path :
@@ -174,4 +170,11 @@ def run_testsuite(model_path) :
     else : 
         print("Cannot use a model that is not a .h5 or .tflite model. Stopping program.")
 
-run_testsuite("models/normal_model.h5")
+def run_all_models_testsuite() :
+    run_testsuite("models/normal_model.h5")
+    run_testsuite("models/model_default.tflite")
+    run_testsuite("models/model_no_opti.tflite")
+    run_testsuite("models/model_experimental.tflite")
+    run_testsuite("models/model_float16.tflite")
+
+run_all_models_testsuite()

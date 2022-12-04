@@ -1,0 +1,5 @@
+Accuracy on test set for models/normal_model.h5 : 0.7172774869109948. Predictions took in average 0.03046850883523831s.
+Accuracy on test set for models/model_default.tflite : 0.7015706806282722. Predictions took in average 0.010125386153216138s.
+Accuracy on test set for models/model_no_opti.tflite : 0.7172774869109948. Predictions took in average 0.015085427548872862s.
+Accuracy on test set for models/model_experimental.tflite : 0.7015706806282722. Predictions took in average 0.015132500863200083s.
+Accuracy on test set for models/model_float16.tflite : 0.7015706806282722. Predictions took in average 0.0151140739780446s.
