@@ -7,6 +7,7 @@ app = Flask(__name__)
 
 @app.route("/", methods=["GET", "POST"])
 def index():
+    label_names = ["down", "go", "left", "no", "right", "stop", "up", "yes"] 
     transcript = "*waiting for audio*"
     print("Variable transcript set to: (BEGIN):", transcript)
     
@@ -31,25 +32,26 @@ def index():
                 f.write(data)
                 print("Audio file created in input/ file")
             r_form = request.form['submit_button']
-            if r_form == 'Default (TFlite)':
-                res = run_model_prediction("models/normal_model.h5", "input/myfile.wav")
-                return render_template('index.html', transcript=str(res))
 
-            elif r_form == 'Default (h5)':
-                print(r_form)
-                return render_template('index.html', transcript=r_form)
+            if r_form == 'Default (h5)':
+                res = run_model_prediction("models/normal_model.h5", "input/myfile.wav")
+                return render_template('index.html', transcript=label_names[res])
+
+            elif r_form == 'Default (TFlite)':
+                res = run_model_prediction("models/model_default.tflite", "input/myfile.wav")
+                return render_template('index.html', transcript=label_names[res])
             
             elif r_form == 'Experimental (TFlite)':
-                print(r_form)
-                return render_template('index.html', transcript=r_form)
+                res = run_model_prediction("models/model_experimental.tflite", "input/myfile.wav")
+                return render_template('index.html', transcript=label_names[res])
             
             elif r_form == 'Float 16 (TFlite)':
-                print(r_form)
-                return render_template('index.html', transcript=r_form)
+                res = run_model_prediction("models/model_float16.tflite", "input/myfile.wav")
+                return render_template('index.html', transcript=label_names[res])
             
             elif r_form == 'No optimization (TFlite)':
-                print(r_form)
-                return render_template('index.html', transcript=r_form)
+                res = run_model_prediction("models/model_no_opti.tflite", "input/myfile.wav")
+                return render_template('index.html', transcript=label_names[res])
 
     return render_template('index.html', transcript=transcript)
 

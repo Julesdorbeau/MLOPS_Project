@@ -15,7 +15,6 @@
         <link rel="stylesheet" href="{{ url_for('static', filename='styles/index.css') }}">
     </head>
 
-    <a href=# id=test><button class='btn btn-default'>Test</button></a>
     <body>
         <a href="{{ url_for('static', filename='images/favicon.png') }}"><input type=”button” value=”call_flask_funtion”></a>
         <!-- ====== Document Start ====== -->
@@ -46,22 +45,11 @@
                         </p>
                         <ul class="ud-hero-buttons">
                             <li>
-                                <button class="ud-main-btn ud-white-btn" type="submit" name="submit_button" value="Default (TFlite)">Default (TFlite)</button>
                                 <button class="ud-main-btn ud-white-btn" type="submit" name="submit_button" value="Default (h5)">Default (h5)</button>
+                                <button class="ud-main-btn ud-white-btn" type="submit" name="submit_button" value="Default (TFlite)">Default (TFlite)</button>
                                 <button class="ud-main-btn ud-white-btn" type="submit" name="submit_button" value="Experimental (TFlite)">Experimental (TFlite)</button>
                                 <button class="ud-main-btn ud-white-btn" type="submit" name="submit_button" value="Float 16 (TFlite)">Float 16 (TFlite)</button>
                                 <button class="ud-main-btn ud-white-btn" type="submit" name="submit_button" value="No optimization (TFlite)">No optimization (TFlite)</button>
-
-                                <!--
-                                <a href=# type="submit" id=test><button class='ud-main-btn ud-white-btn'>SPECIAL TEST</button></a>
-                                <input class="ud-main-btn ud-white-btn" type="submit" value="Default (TFlite)"/>
-                                <a href=# id=test><button class='btn btn-default'>Test</button></a>
-                                <input class="ud-main-btn ud-white-btn" type="submit" name="1" value="Default (h5)"/>
-                                <input class="ud-main-btn ud-white-btn" type="submit" value="Experimental (TFlite)"/>
-                                <input class="ud-main-btn ud-white-btn" type="submit" value="Float 16 (TFlite)"/>
-                                <input class="ud-main-btn ud-white-btn" type="submit" value="No optimization (TFlite)"/>
-                                <a href=”/test”><input type=”button” value=”call_flask_funtion”></a>-->
-                                
                             </li>
                         </ul>
                     </form>
