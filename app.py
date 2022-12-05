@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect
 import speech_recognition as sr
 import os
+from models_functions import *
 
 app = Flask(__name__)
 
@@ -31,8 +32,8 @@ def index():
                 print("Audio file created in input/ file")
             r_form = request.form['submit_button']
             if r_form == 'Default (TFlite)':
-                print(r_form)
-                return render_template('index.html', transcript=r_form)
+                res = run_model_prediction("models/normal_model.h5", "input/myfile.wav")
+                return render_template('index.html', transcript=str(res))
 
             elif r_form == 'Default (h5)':
                 print(r_form)

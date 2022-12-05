@@ -63,12 +63,13 @@ def run_normal_prediction(model_path, audio) :
     print(predicted_label)
     return predicted_label
 
-def run_model_prediction(model_path, audio) : 
+def run_model_prediction(model_path, audio) :
+    audio = tf.io.read_file(audio)
     preprocessed_audio = preprocess_audio(audio)
     if "h5" in model_path :
-        run_normal_prediction(model_path, preprocessed_audio)
+        return run_normal_prediction(model_path, preprocessed_audio)
     elif "tflite" in model_path :
-        run_tflite_prediction(model_path, preprocessed_audio)
+        return run_tflite_prediction(model_path, preprocessed_audio)
     else : 
         print("Cannot use a model that is not a .h5 or .tflite model. Stopping program.")
 
@@ -178,3 +179,4 @@ def run_all_models_testsuite() :
     run_testsuite("models/model_float16.tflite")
 
 # run_all_models_testsuite()
+#run_model_prediction("models/normal_model.h5", "input/myfile.wav")
