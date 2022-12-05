@@ -177,4 +177,4 @@ def run_all_models_testsuite() :
     run_testsuite("models/model_experimental.tflite")
     run_testsuite("models/model_float16.tflite")
 
-run_all_models_testsuite()
+# run_all_models_testsuite()
