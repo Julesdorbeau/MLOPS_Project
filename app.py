@@ -1,9 +1,19 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, jsonify
 import speech_recognition as sr
 import os
+import sounddevice
+from scipy.io.wavfile import write
+
 from models_functions import *
 
 app = Flask(__name__)
+
+
+mfcc = 13   
+size_of_chunks = 10000
+n_fft = 2048
+hop_length = 512
+
 
 @app.route("/", methods=["GET", "POST"])
 def index():
@@ -54,6 +64,20 @@ def index():
                 return render_template('index.html', transcript=label_names[res])
 
     return render_template('index.html', transcript=transcript)
+
+
+@app.route("/record")   
+def record():
+   print('Recording')
+   fs = 22050
+   seconds = 10
+   record_voice = sounddevice.rec(int(seconds * fs), samplerate = fs, channels = 1, blocking = False)
+   sounddevice.wait()
+   write("recorded/recorded.wav", fs, record_voice)
+   #preds = decode()
+   #print("Here is some preds", preds)
+   #words = possible_words(preds)
+   return jsonify(result="preds", answer = "words") 
 
 
 if __name__ == "__main__":

@@ -15,8 +15,27 @@
         <link rel="stylesheet" href="{{ url_for('static', filename='styles/index.css') }}">
     </head>
 
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script type=text/javascript>
+            $(function() {
+                $('a#recordButton').on('click', function(e) {
+                    $(this).val('Recording...')
+                e.preventDefault()
+                $.getJSON('/record',
+                    function(data) {
+                        console.log("after recording is done");
+                        // document.getElementById("recordButtonBTN").disabled = false;
+                        $("#text").text(data.result);
+                        $("#word").text(data.answer);
+                        $("#recordButtonBTN").removeAttr("disabled");
+                        $("#recordButtonBTN").html('Start Recording');
+                });
+                return false;
+            });
+        });
+    </script>
+
     <body>
-        <a href="{{ url_for('static', filename='images/favicon.png') }}"><input type=”button” value=”call_flask_funtion”></a>
         <!-- ====== Document Start ====== -->
         <section class="ud-hero" style="padding-top:5em">
             <div class="container">
@@ -35,9 +54,9 @@
                         <ul class="ud-hero-buttons">
                             <li>
                                 <input class="ud-main-btn ud-white-btn" type="file" name="file"/>
-                                <button class="ud-main-btn ud-white-btn">
-                                Record voice
-                                </button>
+                                <a href=# id=recordButton>
+                                    <button id="recordButtonBTN" class='ud-main-btn ud-white-btn'>Record voice</button>
+                                </a>
                             </li>
                         </ul>
                         <p class="ud-hero-desc" style="padding-top:3em">
