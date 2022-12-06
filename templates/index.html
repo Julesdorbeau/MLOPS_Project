@@ -50,7 +50,13 @@
                     <p class="ud-hero-desc" style="padding-top:0em">
                         Audio from text generator: <a style="color:hotpink" target="_blank" href="https://voicemaker.in">https://voicemaker.in/</a>
                     </p>
-                    <!-- START OF RECODING PART -->
+                    <p class="ud-hero-desc" style="margin-bottom: 0;">
+                        VOICE RECORDER
+                    </p>
+                    <p class="ud-hero-desc" style="padding-top:0em">
+                        Audio from text generator: <a style="color:hotpink" target="_blank" href="https://voice-recorder-online.com/fr">https://voice-recorder-online.com/fr</a>
+                    </p>
+                    <!-- START OF RECODING PART
                     <select hidden id="encodingTypeSelect">
                         <option hidden value="wav">Waveform Audio (.wav)</option>
                     </select>
@@ -72,12 +78,11 @@
                     <pre hidden>Log</pre>
                     <pre hidden id="log"></pre>
                     
-                    <!-- inserting these scripts at the end to be able to use all the elements in the DOM -->
                     <script src="{{ url_for('static', filename='js/WebAudioRecorder.min.js') }}" ></script>
                     <script src="{{ url_for('static', filename='js/app.js') }}" ></script>
-                    <!-- END OF RECODING PART -->
+                    END OF RECODING PART -->
 
-                    <p class="ud-hero-desc" style="padding-top:3em; margin-bottom: 0;">
+                    <p class="ud-hero-desc" style="margin-bottom: 0;">
                         FILE SELECTOR
                     </p>
                     <form method="post" enctype="multipart/form-data">
