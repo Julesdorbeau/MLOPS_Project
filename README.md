@@ -27,7 +27,7 @@ Ce projet a pour but de déployer des modèles d'intelligence artificielle spéc
 
 - **`POST `** : Soumet un fichier audio pour retranscription. Le serveur renvoie le texte transcrit de l'audio. La réponse est ensuite affichée sur la page web directement.
 
-===============================================================================================================================================================================================================
+---
 
 # MLOPS Project: Deployment of AI for audio transcription
 
